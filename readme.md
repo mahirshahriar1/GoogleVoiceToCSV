@@ -1,6 +1,6 @@
 # Google Voice Call Log Exporter 📞➡️📊
 
-**Live Tool:** [Click Here](https://mahirshahriar1.github.io/VoiceToCSV/)  
+**Live Tool:** [Click Here](https://mahirshahriar1.github.io/GoogleVoiceToCSV/)  
 
 Converts exported Google Voice call log `.html` files (e.g., from Google Takeout) into a preview table and a downloadable CSV file.
 
