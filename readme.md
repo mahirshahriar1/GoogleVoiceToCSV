@@ -35,8 +35,6 @@ Converts exported Google Voice call log `.html` files (e.g., from Google Takeout
 *   Date (Pacific)
 *   Time (Pacific)
 *   Duration
-*   Labels
-*   User Deleted
 *   Message
 
 ## Contributing
