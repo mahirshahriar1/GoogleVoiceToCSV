@@ -1,79 +1,155 @@
+/* === Global Styles & Resets === */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     line-height: 1.6;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 15px;
-    background-color: #f4f4f4;
-    color: #333;
+    /* Increase max-width slightly more to accommodate wider table before scroll */
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-size: 16px;
 }
 
-h1 {
+/* ... (h1, h2, footer, code styles remain the same) ... */
+h1 { text-align: center; color: #0d6efd; margin-bottom: 1.5em; font-size: 2.2em; font-weight: 600; }
+h2 { text-align: center; margin-bottom: 1em; color: #495057; font-size: 1.5em; font-weight: 500; }
+footer { text-align: center; margin-top: 40px; padding-top: 20px; font-size: 0.85em; color: #6c757d; border-top: 1px solid #dee2e6; }
+code { background-color: #e9ecef; padding: 3px 6px; border-radius: 4px; font-size: 0.9em; color: #000; }
+
+
+/* === Sections (Controls, Processing, Results) === */
+.controls, #processing-area, #resultsArea {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #dee2e6;
     text-align: center;
-    color: #0056b3;
 }
 
-.controls, #processing-area {
-    background-color: #fff;
-    padding: 20px;
+/* ... (Buttons, Inputs, Status styles remain the same) ... */
+.button, button { display: inline-block; background-color: #0d6efd; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 1em; font-weight: 500; margin: 8px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+.button:hover, button:hover { background-color: #0b5ed7; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+.button:active, button:active { transform: translateY(1px); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+button:disabled { background-color: #adb5bd; color: #f8f9fa; cursor: not-allowed; box-shadow: none; transform: none; }
+#fileInfo { margin-left: 15px; font-style: normal; color: #495057; display: inline-block; vertical-align: middle; margin-top: 8px; }
+#status { margin-top: 20px; font-weight: 500; color: #0d6efd; padding: 8px; min-height: 2em; }
+
+
+/* === Results Table === */
+#resultsArea {
+    /* Use existing section styles */
+}
+
+.table-container {
+    max-height: 60vh;
+    /* Ensure both overflow directions are set to auto */
+    overflow: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
 }
 
-.button, button {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+#resultsTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.95em;
+    /* Explicitly set a min-width for the table itself to guarantee scrolling if needed */
+    /* Adjust this value based on your estimated total column width */
+    min-width: 1000px; /* Example: Forces scroll if container is narrower */
+    table-layout: auto; /* Let browser handle layout with hints from min-width */
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#resultsTable thead th {
+    background-color: #e9ecef;
+    color: #212529;
+    text-align: left;
+    padding: 12px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    /* Prevent header text from wrapping */
+    white-space: nowrap;
+}
+
+/* Style the top-left and top-right corners */
+#resultsTable thead th:first-child { border-top-left-radius: 6px; }
+#resultsTable thead th:last-child { border-top-right-radius: 6px; }
+
+
+#resultsTable tbody td {
     border: none;
-    border-radius: 5px;
+    border-bottom: 1px solid #e9ecef;
+    padding: 10px 15px;
+    text-align: left;
+    vertical-align: middle;
+    /* Allow word break generally, but override below for specific columns */
+    word-break: break-word;
+    background-color: #fff;
+}
+
+#resultsTable tbody tr:last-child td { border-bottom: none; }
+#resultsTable tbody tr { transition: background-color 0.15s ease; }
+#resultsTable tbody tr:nth-child(even) td { background-color: #f8f9fa; }
+#resultsTable tbody tr:hover td { background-color: #e9ecef; }
+
+/* === *** NEW: Column Width Adjustments & No Wrapping *** === */
+
+/* Column Headers (TH) */
+#resultsTable thead th:nth-child(1) { min-width: 160px; } /* Phone Number */
+#resultsTable thead th:nth-child(2) { min-width: 120px; } /* Direction */
+#resultsTable thead th:nth-child(3) { min-width: 210px; } /* Timestamp (UTC) */
+#resultsTable thead th:nth-child(4) { min-width: 120px; white-space: nowrap; } /* Date (Pacific) */
+#resultsTable thead th:nth-child(5) { min-width: 130px; white-space: nowrap; } /* Time (Pacific) */
+#resultsTable thead th:nth-child(6) { min-width: 120px; } /* Duration */
+#resultsTable thead th:nth-child(7) { min-width: 100px; } /* Labels */
+#resultsTable thead th:nth-child(8) { min-width: 80px;  } /* User Deleted */
+#resultsTable thead th:last-child { min-width: 250px; } /* Message (last column) */
+
+/* Corresponding Table Data Cells (TD) */
+#resultsTable tbody td:nth-child(1) { min-width: 160px; white-space: nowrap; } /* Phone Number - no wrap */
+#resultsTable tbody td:nth-child(2) { min-width: 120px; } /* Direction */
+#resultsTable tbody td:nth-child(3) { min-width: 210px; white-space: nowrap; } /* Timestamp (UTC) - no wrap */
+#resultsTable tbody td:nth-child(4) { min-width: 120px; white-space: nowrap; } /* Date (Pacific) - no wrap */
+#resultsTable tbody td:nth-child(5) { min-width: 130px; white-space: nowrap; } /* Time (Pacific) - no wrap */
+#resultsTable tbody td:nth-child(6) { min-width: 120px; } /* Duration */
+#resultsTable tbody td:nth-child(7) { min-width: 100px; } /* Labels */
+#resultsTable tbody td:nth-child(8) { min-width: 80px;  } /* User Deleted */
+#resultsTable tbody td:last-child { min-width: 250px; word-break: break-word; white-space: normal; } /* Message (last column) - allow wrap */
+/* =========================================================== */
+
+
+/* === Download Link (Styled as Button) === */
+#resultsArea #downloadLink {
+    display: inline-block;
+    background-color: #198754;
+    margin: 20px auto 0 auto;
+    width: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Inherit other button styles */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
     font-size: 1em;
-    margin: 5px;
-    transition: background-color 0.3s ease;
+    font-weight: 500;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 
-.button:hover, button:hover {
-    background-color: #0056b3;
-}
-
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-#fileInfo {
-    margin-left: 15px;
-    font-style: italic;
-    color: #555;
-}
-
-#status {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-#downloadLink {
-    margin-top: 10px;
-    background-color: #28a745; /* Green for download */
-}
-
-#downloadLink:hover {
-    background-color: #218838;
-}
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: #666;
-}
-
-code {
-    background-color: #e9e9e9;
-    padding: 2px 5px;
-    border-radius: 3px;
+#resultsArea #downloadLink:hover {
+    background-color: #157347;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }

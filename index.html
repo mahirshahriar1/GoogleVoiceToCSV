@@ -13,7 +13,6 @@
 
     <div class="controls">
         <label for="folderInput" class="button">Select Folder</label>
-        <!-- NOTE: webkitdirectory is non-standard but widely supported for folder selection -->
         <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;">
         <span id="fileInfo">No folder selected</span>
     </div>
@@ -21,14 +20,39 @@
     <div id="processing-area" style="display: none;">
         <button id="processButton" disabled>Process Files</button>
         <p id="status"></p>
+    </div>
+
+    <!-- *** NEW: Results Area *** -->
+    <div id="resultsArea" style="display: none;">
+        <h2>Parsed Call Data</h2>
+        <div class="table-container">
+             <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <!-- Headers will match the CSV order -->
+                        <th>Phone Number</th>
+                        <th>Direction</th>
+                        <th>Timestamp (UTC)</th>
+                        <th>Date (Pacific)</th>
+                        <th>Time (Pacific)</th>
+                        <th>Duration</th>                     
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Data rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
         <a id="downloadLink" style="display: none;" class="button">Download CSV</a>
     </div>
+    <!-- ************************* -->
+
 
     <footer>
         <p>Based on local processing. Requires HTML files named like: <code><Phone> - <Direction> - <Timestamp>Z.html</code></p>
     </footer>
 
-    <!-- Include the JavaScript logic -->
     <script src="script.js"></script>
 </body>
 </html>
